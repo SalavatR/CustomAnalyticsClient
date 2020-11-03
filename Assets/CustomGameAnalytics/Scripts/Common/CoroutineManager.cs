@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace CustomGameAnalytics.Scripts.Common
 {
-    public class CoroutineManager : MonoBehaviour
+    public class CoroutineManager : Singleton<CoroutineManager>
     {
-        public static CoroutineManager Instance;
 
         private void Awake()
         {
-            if (!Instance) Instance = this;
-            else
+            if (Instance != this)
             {
                 Destroy(this);
                 Debug.LogError("Only one instance can be on scene");
