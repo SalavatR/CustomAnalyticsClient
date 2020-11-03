@@ -9,9 +9,9 @@ public class EventsTest : MonoBehaviour
 {
     private void Start()
     {
-        EventsManager.Instance.TrackEvent(new LevelInfoData(LevelInfoType.Lose, 1){});
-        EventsManager.Instance.TrackEvent(new LevelInfoData(LevelInfoType.Start, 1));
-        EventsManager.Instance.TrackEvent(new LevelInfoData(LevelInfoType.Win, 1));
-        EventsManager.Instance.TrackEvent(new PaymentData(){price = 11, paymentId = Guid.NewGuid().ToString()});
+        EventsManager.TrackEvent(new LevelInfoData(LevelInfoType.Lose, 1){});
+        EventsManager.TrackEvent(new LevelInfoData(LevelInfoType.Start, 1));
+        EventsManager.TrackEvent(new LevelInfoData(LevelInfoType.Win, 1));
+        EventsManager.TrackEvent(new PaymentData(){price = 11, paymentId = Guid.NewGuid().ToString()});
     }
 }

@@ -10,7 +10,7 @@ namespace CustomGameAnalytics.Scripts
     [RequireComponent(typeof(CoroutineManager))]
     public class EventsManager : MonoBehaviour
     {
-        public static EventsManager Instance;
+        private static EventsManager Instance;
 
         public AnalyticsSettings settings;
         private EventsSender _eventsSender;
@@ -27,13 +27,28 @@ namespace CustomGameAnalytics.Scripts
             _eventsSender = new EventsSender(settings.serverAddress, settings.cooldownBeforeSend);
         }
 
-        public void TrackEvent(EventData eventData)
+        private void TrackEventLocal(EventData eventData)
         {
+            if (!settings)
+            {
+                Debug.LogError("Please Add Settings File");
+            }
+
             eventData.time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             eventData.version = Application.version;
             var ev = new CustomEvent {type = eventData.type, data = eventData};
 
             _eventsSender.AddEvent(ev);
+        }
+
+        public static void TrackEvent(EventData eventData)
+        {
+            if (!Instance)
+            {
+                Debug.LogError("Please add EventsManager component to the scene");
+            }
+
+            Instance.TrackEventLocal(eventData);
         }
     }
 }
